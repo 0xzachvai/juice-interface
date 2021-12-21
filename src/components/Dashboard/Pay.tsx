@@ -103,7 +103,7 @@ export default function Pay() {
 
   return (
     <div>
-      <div style={{ marginBottom: '0.25rem' }}>
+      <div style={{ marginBottom: '0.5rem' }}>
         <TokenAMMPriceBadge exchangeName="uniswap" />
       </div>
       <div
