@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { utils } from 'ethers'
 
 import { Participant } from './participant'
 
@@ -24,7 +23,6 @@ export const parseProjectJson = (project: ProjectJson): Project => ({
   ...project,
   id: project.id ? BigNumber.from(project.id) : undefined,
   createdAt: project.createdAt ? parseInt(project.createdAt) : undefined,
-  handle: project.handle ? utils.parseBytes32String(project.handle) : undefined,
   currentBalance: project.currentBalance
     ? BigNumber.from(project.currentBalance)
     : undefined,
