@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
 import { useTokenAMMPriceQuery } from 'hooks/ERC20AMMPrice'
 import { formattedNum } from 'utils/formatNumber'
@@ -14,15 +14,24 @@ const LOGOS = {
 
 type Props = {
   exchangeName: exchangeName
+  tokenSymbol: string
+  tokenAddress: string
 }
 
-export default function TokenAMMPriceBadge({ exchangeName }: Props) {
+export default function TokenAMMPriceBadge({
+  exchangeName,
+  tokenSymbol,
+  tokenAddress,
+}: Props) {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { data: priceData } = useTokenAMMPriceQuery()
-  const { projectTokenSymbol, ETHPrice } = priceData || {}
+  const { data: priceData } = useTokenAMMPriceQuery({
+    tokenSymbol,
+    tokenAddress,
+  })
+  const { ETHPrice } = priceData || {}
   const Logo = LOGOS[exchangeName]
 
   return (
@@ -40,7 +49,7 @@ export default function TokenAMMPriceBadge({ exchangeName }: Props) {
         <Logo size={20} />
       </span>
       {priceData ? (
-        `${formattedNum(ETHPrice?.toFixed(0))} ${projectTokenSymbol}/ETH`
+        `${formattedNum(ETHPrice?.toFixed(0))} ${tokenSymbol}/ETH`
       ) : (
         <LoadingOutlined />
       )}

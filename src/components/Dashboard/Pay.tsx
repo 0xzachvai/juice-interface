@@ -28,8 +28,14 @@ export default function Pay() {
   const [payWarningModalVisible, setPayWarningModalVisible] =
     useState<boolean>(false)
 
-  const { projectId, currentFC, metadata, tokenSymbol, isArchived } =
-    useContext(ProjectContext)
+  const {
+    projectId,
+    currentFC,
+    metadata,
+    tokenSymbol,
+    isArchived,
+    tokenAddress,
+  } = useContext(ProjectContext)
 
   const converter = useCurrencyConverter()
 
@@ -104,7 +110,13 @@ export default function Pay() {
   return (
     <div>
       <div style={{ marginBottom: '0.5rem' }}>
-        <TokenAMMPriceBadge exchangeName="uniswap" />
+        {tokenSymbol && tokenAddress && (
+          <TokenAMMPriceBadge
+            exchangeName="uniswap"
+            tokenSymbol={tokenSymbol}
+            tokenAddress={tokenAddress}
+          />
+        )}
       </div>
       <div
         style={{

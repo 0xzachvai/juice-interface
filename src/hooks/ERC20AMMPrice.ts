@@ -27,11 +27,13 @@ interface State {
   unlocked: boolean
 }
 
-export function useTokenAMMPriceQuery() {
-  // TODO pass as prop, possibly also contract addr
-  const projectTokenSymbol = 'JBX'
-  const projectTokenName = 'Juicebox'
-  // TODO probably search for pool address?
+type Props = {
+  tokenSymbol: string
+  tokenAddress: string
+}
+
+export function useTokenAMMPriceQuery({ tokenSymbol, tokenAddress }: Props) {
+  // TODO call UniswapFactor getPool to get pool address
   const poolAddress = '0x48598Ff1Cee7b4d31f8f9050C2bbAE98e17E6b17' // pool address for JBX/ETH
 
   const poolContract = new Contract(
@@ -72,13 +74,7 @@ export function useTokenAMMPriceQuery() {
     async () => {
       const immutables = await getPoolImmutables()
       const state = await getPoolState()
-      const PROJECT_TOKEN = new Token(
-        1,
-        immutables.token0,
-        18,
-        projectTokenSymbol,
-        projectTokenName,
-      )
+      const PROJECT_TOKEN = new Token(1, immutables.token0, 18, tokenSymbol)
       const ETH = new Token(1, immutables.token1, 18, 'ETH', 'Ether')
 
       const projectTokenETHPool = new Pool(
@@ -94,7 +90,7 @@ export function useTokenAMMPriceQuery() {
       const ETHPrice = projectTokenETHPool.token1Price
 
       return {
-        projectTokenSymbol,
+        tokenSymbol,
         projectTokenPrice,
         ETHPrice,
       }
