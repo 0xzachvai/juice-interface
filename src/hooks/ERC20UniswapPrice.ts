@@ -149,7 +149,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
       }
     },
     {
-      refetchInterval: 1000,
+      refetchInterval: 30000,
     },
   )
 }

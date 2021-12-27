@@ -7,7 +7,6 @@ import UniswapLogo from 'components/icons/Uniswap'
 
 type exchangeName = 'uniswap'
 
-// const LOGOS: { [K in exchangeName]: JSX.Element } = {
 const LOGOS = {
   uniswap: UniswapLogo,
 }
@@ -34,27 +33,35 @@ export default function TokenAMMPriceBadge({
 
   const { WETHPrice } = priceData || {}
   const Logo = LOGOS[exchangeName]
+  const uniswapUrl = `https://app.uniswap.org/#/swap?&inputCurrency=${tokenAddress}&outputCurrency=ETH`
 
   return (
-    <span
-      style={{
-        padding: '0 0.5rem',
-        borderRadius: 100,
-        border: `1px solid ${colors.stroke.secondary}`,
-        fontSize: '0.7rem',
-        display: 'inline-flex',
-        alignItems: 'center',
-        filter: !isLoading && !WETHPrice ? 'grayscale(100%)' : undefined,
-      }}
+    <a
+      className="quiet"
+      href={uniswapUrl}
+      rel="noopener noreferrer"
+      target="_blank"
     >
-      <span style={{ marginRight: '0.25rem' }}>
-        <Logo size={20} />
-      </span>
-      {isLoading && <LoadingOutlined />}
+      <span
+        style={{
+          padding: '0 0.5rem',
+          borderRadius: 100,
+          border: `1px solid ${colors.stroke.secondary}`,
+          fontSize: '0.7rem',
+          display: 'inline-flex',
+          alignItems: 'center',
+          filter: !isLoading && !WETHPrice ? 'grayscale(100%)' : undefined,
+        }}
+      >
+        <span style={{ marginRight: '0.25rem' }}>
+          <Logo size={20} />
+        </span>
+        {isLoading && <LoadingOutlined />}
 
-      {!isLoading &&
-        WETHPrice &&
-        `${formattedNum(WETHPrice.toFixed(0))} ${tokenSymbol}/ETH`}
-    </span>
+        {!isLoading &&
+          WETHPrice &&
+          `${formattedNum(WETHPrice.toFixed(0))} ${tokenSymbol}/ETH`}
+      </span>
+    </a>
   )
 }

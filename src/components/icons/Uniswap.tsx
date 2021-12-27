@@ -1,10 +1,9 @@
-export default function UniswapLogo({
-  size,
-  fill,
-}: {
+type Props = {
   size?: number
   fill?: string
-}) {
+}
+
+export default function UniswapLogo({ size, fill }: Props): JSX.Element {
   const widthToHeight = 168.3 / 193.8
   const height = size ?? 193.8
 
