@@ -1,7 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { useContext } from 'react'
 import { ThemeContext } from 'contexts/themeContext'
-import { useTokenAMMPriceQuery } from 'hooks/ERC20AMMPrice'
+import { useUniswapPriceQuery } from 'hooks/ERC20UniswapPrice'
 import { formattedNum } from 'utils/formatNumber'
 import UniswapLogo from 'components/icons/Uniswap'
 
@@ -27,11 +27,12 @@ export default function TokenAMMPriceBadge({
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const { data: priceData } = useTokenAMMPriceQuery({
+  const { data: priceData, isLoading } = useUniswapPriceQuery({
     tokenSymbol,
     tokenAddress,
   })
-  const { ETHPrice } = priceData || {}
+
+  const { WETHPrice } = priceData || {}
   const Logo = LOGOS[exchangeName]
 
   return (
@@ -43,16 +44,17 @@ export default function TokenAMMPriceBadge({
         fontSize: '0.7rem',
         display: 'inline-flex',
         alignItems: 'center',
+        filter: !isLoading && !WETHPrice ? 'grayscale(100%)' : undefined,
       }}
     >
       <span style={{ marginRight: '0.25rem' }}>
         <Logo size={20} />
       </span>
-      {priceData ? (
-        `${formattedNum(ETHPrice?.toFixed(0))} ${tokenSymbol}/ETH`
-      ) : (
-        <LoadingOutlined />
-      )}
+      {isLoading && <LoadingOutlined />}
+
+      {!isLoading &&
+        WETHPrice &&
+        `${formattedNum(WETHPrice.toFixed(0))} ${tokenSymbol}/ETH`}
     </span>
   )
 }
