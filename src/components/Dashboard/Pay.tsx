@@ -150,8 +150,7 @@ export default function Pay() {
                   (payIn === 0 ? parseEther('1') : converter.usdToWei('1')) ??
                     BigNumber.from(0),
                 )}{' '}
-                {tokenSymbol ?? 'tokens'}/
-                <CurrencySymbol currency={payIn} />
+                {tokenSymbol ?? 'tokens'}/{currencyName(payIn)}
               </span>
             )}
           </div>
