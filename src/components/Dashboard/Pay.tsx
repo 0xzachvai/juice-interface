@@ -115,6 +115,7 @@ export default function Pay() {
             exchangeName="uniswap"
             tokenSymbol={tokenSymbol}
             tokenAddress={tokenAddress}
+            exchangeLink={`https://app.uniswap.org/#/swap?&inputCurrency=${tokenAddress}&outputCurrency=ETH`}
           />
         )}
       </div>

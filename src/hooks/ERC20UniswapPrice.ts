@@ -138,11 +138,11 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
 
         const projectTokenPrice = projectTokenETHPool.token0Price
         const WETHPrice = projectTokenETHPool.token1Price
-
         return {
           tokenSymbol,
           projectTokenPrice,
           WETHPrice,
+          liquidity: projectTokenETHPool.liquidity.toString(),
         }
       } catch (e) {
         console.error('Error fetching AMM price', e)
